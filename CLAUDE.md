@@ -25,6 +25,7 @@ This is a **local Windows desktop app** (global hotkey, mic capture, tray, clipb
 - Hardware/OS-bound paths — audio capture (`sounddevice`), global hotkey (`pynput`), `SendInput` paste, tray (`pystray`) — need a real Windows session with a mic and GUI. The **user's Windows machine is authoritative** for these.
 - Never claim the record → transcribe → paste flow, the hotkey, or tray behavior verified without the user running it on Windows. Flag the risk plainly instead.
 - Inspect logs / read code yourself before asserting anything works. Can't run the authoritative check → say so and stop.
+- Browser per session, never shared. The desktop app's Browser pane (`mcp__Claude_Browser__*`, `preview_start`) is one Chrome per app: a second session or subagent gets "Another task's Chrome owns browser slot". The official playwright plugin is one persistent profile: the second connection gets "Browser is already in use ... use --isolated" and deadlocks. Parallel or subagent browser work uses `@playwright/mcp --isolated` (in-memory profile; copy `.mcp.json` from claude-starter).
 
 ## Core principles
 
